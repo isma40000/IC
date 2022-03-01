@@ -1,26 +1,30 @@
 package estrella;
 
-public class Nodo implements Comparable<Nodo>{
+public class Nodo implements Comparable<Nodo> {
 	/** Coordenadas xy del nodo */
 	private int x, y;
 	/** Esto o un vector de solucion TEMP */
 	private Nodo nodoAnt;
 	private Ntipo tipo;
 	/** Distancia mínima desde el inicio hasta este nodo */
-	private double dInicio;
+	private double g;
+	/** Distancia mínima desde el nodo hasta la meta */
+	private double h;
+	/** Coste para comparar */
+	private double f;
 
-//	private boolean prohibido;
 //	/** más adelante*/
 //	private double peligro;
-//	/** Distancia mínima desde el nodo hasta la meta*/
-//	private double dMeta;
 
-	public Nodo(int x, int y) {
+
+	public Nodo(int x, int y, double h) {
 		this.x = x;
 		this.y = y;
 		nodoAnt = null;
 		tipo = Ntipo.NORMAL;
-		dInicio = Double.MAX_VALUE;
+		g = Double.MAX_VALUE;
+		this.h = h;
+		f = Double.MAX_VALUE;
 	}
 
 //	public double getdMeta() {
@@ -46,12 +50,36 @@ public class Nodo implements Comparable<Nodo>{
 		this.y = y;
 	}
 
-	public double getdInicio() {
-		return dInicio;
+	public double getg() {
+		return g;
 	}
 
-	public void setdInicio(double dInicio) {
-		this.dInicio = dInicio;
+	public double getf() {
+		return f;
+	}
+
+	public Ntipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Ntipo tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setg(double g) {
+		this.g = g;
+	}
+
+	public void setf(double f) {
+		this.f = f;
+	}
+
+	public double geth() {
+		return h;
+	}
+
+	public void seth(double h) {
+		this.h = h;
 	}
 
 	public Nodo getNodoAnt() {
@@ -65,9 +93,9 @@ public class Nodo implements Comparable<Nodo>{
 	@Override
 	public int compareTo(Nodo o) {
 		// TODO Auto-generated method stub
-		if(dInicio < o.getdInicio()) {
+		if (f < o.getf()) {
 			return 1;
-		}else {
+		} else {
 			return -1;
 		}
 	}

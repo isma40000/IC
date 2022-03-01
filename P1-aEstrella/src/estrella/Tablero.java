@@ -8,29 +8,45 @@ public class Tablero {
 	private Nodo inicio;
 	private int dX, dY;
 
-	public Tablero(int dX, int dY) {
+	public Tablero(int dX, int dY, int iX, int iY, int mX, int mY) {
 		this.dX = dX;
 		this.dY = dY;
-		nodos = new Nodo[dX][dY];
+		nodos = new Nodo[dX-1][dY-1];
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
-				nodos[i][j] = new Nodo(i, j);
+				nodos[i][j] = new Nodo(i, j, getDistanceBetPoints(i, j, mX, mY));
 			}
 		}
+
 	}
-	public List<Nodo> vecinos(Nodo n){
+
+	public List<Nodo> vecinos(Nodo n) {
 		Vecinos a[] = Vecinos.values();
-		for(Vecinos c : a) {
-			
+		for (Vecinos c : a) {
+
 		}
 		return null;
-		
+
 	}
+
 	public boolean corrCoord(int x, int y) {
-		return x>=0 && x<dX && y>=0 && y<dY;
+		return x >= 0 && x < dX && y >= 0 && y < dY;
 	}
+
 	public Nodo[][] getNodos() {
 		return nodos;
+	}
+
+	public Nodo getNodo(int x, int y) {
+		return nodos[x][y];
+	}
+
+	public double getDistanceBetPoints(int xa, int ya, int xb, int yb) {
+		return Math.sqrt(Math.pow((xb - xa),2) + Math.pow((yb - ya),2));
+	}
+
+	public double getDistanceBetNodes(Nodo a, Nodo b) {
+		return Math.sqrt(Math.pow((b.getX() - a.getX()),2) + Math.pow((b.getY() - a.getY()),2));
 	}
 
 	public void setNodos(Nodo[][] nodos) {
