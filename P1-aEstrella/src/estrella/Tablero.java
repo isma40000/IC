@@ -1,7 +1,5 @@
 package estrella;
 
-import java.util.List;
-
 public class Tablero {
 	private Nodo[][] nodos;
 	private Nodo meta;
@@ -11,24 +9,22 @@ public class Tablero {
 	public Tablero(int dX, int dY, int iX, int iY, int mX, int mY) {
 		this.dX = dX;
 		this.dY = dY;
-		nodos = new Nodo[dX-1][dY-1];
+		nodos = new Nodo[dX][dY];
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
 				nodos[i][j] = new Nodo(i, j, getDistanceBetPoints(i, j, mX, mY));
 			}
 		}
+		inicio = nodos[iX][iY];
+		meta = nodos[mX] [mY];
+		inicio.setTipo(Ntipo.INICIO);
+		meta.setTipo(Ntipo.META);
 
 	}
 
-	public List<Nodo> vecinos(Nodo n) {
-		Vecinos a[] = Vecinos.values();
-		for (Vecinos c : a) {
-
-		}
-		return null;
-
+	public void putProhib(int x, int y) {
+		nodos[x][y].setTipo(Ntipo.PROHIBIDO);
 	}
-
 	public boolean corrCoord(int x, int y) {
 		return x >= 0 && x < dX && y >= 0 && y < dY;
 	}

@@ -50,11 +50,11 @@ public class Nodo implements Comparable<Nodo> {
 		this.y = y;
 	}
 
-	public double getg() {
+	public double getG() {
 		return g;
 	}
 
-	public double getf() {
+	public double getF() {
 		return f;
 	}
 
@@ -66,19 +66,19 @@ public class Nodo implements Comparable<Nodo> {
 		this.tipo = tipo;
 	}
 
-	public void setg(double g) {
+	public void setG(double g) {
 		this.g = g;
 	}
 
-	public void setf(double f) {
+	public void setF(double f) {
 		this.f = f;
 	}
 
-	public double geth() {
+	public double getH() {
 		return h;
 	}
 
-	public void seth(double h) {
+	public void setH(double h) {
 		this.h = h;
 	}
 
@@ -93,7 +93,7 @@ public class Nodo implements Comparable<Nodo> {
 	@Override
 	public int compareTo(Nodo o) {
 		// TODO Auto-generated method stub
-		if (f < o.getf()) {
+		if (f < o.getF()) {
 			return 1;
 		} else {
 			return -1;

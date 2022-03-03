@@ -25,8 +25,8 @@ public class A_Estrella {
 			if (board.corrCoord(x, y)) {//comprueba si la coord esta dentro del tablero
 				Nodo nVecino = board.getNodo(x, y);
 				if(!abierta.contains(nVecino) && !cerrada.contains(nVecino) && nVecino.getTipo() != Ntipo.PROHIBIDO) {
-					nVecino.setg(nodo.getg() + board.getDistanceBetNodes(nodo, nVecino));
-					nVecino.setf(nVecino.getg() + nVecino.geth());
+					nVecino.setG(nodo.getG() + board.getDistanceBetNodes(nodo, nVecino));
+					nVecino.setF(nVecino.getG() + nVecino.getH());
 					nVecino.setNodoAnt(nodo);
 					abierta.add(board.getNodo(x, y));
 				}
