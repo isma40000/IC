@@ -1,12 +1,12 @@
-package Presentacion;
+package vista;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import Negocio.Objetos.Nodo;
-import Negocio.Objetos.Tablero;
+import estrella.Nodo;
+import estrella.Tablero;
 
 public class Controlador {
-	
+
 	private static Controlador instance = null;
 	private boolean btnInicio;
 	private boolean btnMeta;
@@ -15,15 +15,16 @@ public class Controlador {
 	private boolean btnWayPoint;
 	private boolean btnPeligroso;
 	private boolean btnCamino;
-	private Tablero tablero; 
-	
+	private Tablero tablero;
+
 	public static Controlador getInstance() {
-		if(instance == null){
+		if (instance == null) {
 			instance = new Controlador();
 		}
-		
+
 		return instance;
 	}
+
 	public Controlador() {
 		btnInicio = false;
 		btnMeta = false;
@@ -31,7 +32,7 @@ public class Controlador {
 		btnLibre = false;
 		btnWayPoint = false;
 	}
-	
+
 	public boolean isBtnInicio() {
 		return btnInicio;
 	}
@@ -53,8 +54,8 @@ public class Controlador {
 	}
 
 	public Tablero getTablero() {
-		if(tablero == null) {
-			tablero =  new Tablero(5,5);
+		if (tablero == null) {
+			tablero = new Tablero(5, 5);
 		}
 		return tablero;
 	}
@@ -72,7 +73,7 @@ public class Controlador {
 		btnPeligroso = false;
 		btnCamino = false;
 	}
-	
+
 	public void setBtnMeta(boolean btnMeta) {
 		btnInicio = false;
 		this.btnMeta = btnMeta;
@@ -82,7 +83,7 @@ public class Controlador {
 		btnPeligroso = false;
 		btnCamino = false;
 	}
-	
+
 	public void setBtnProhibido(boolean btnProhibido) {
 		btnInicio = false;
 		btnMeta = false;
@@ -92,7 +93,7 @@ public class Controlador {
 		btnPeligroso = false;
 		btnCamino = false;
 	}
-	
+
 	public void setBtnLibre(boolean btnLibre) {
 		btnInicio = false;
 		btnMeta = false;
@@ -102,7 +103,7 @@ public class Controlador {
 		btnPeligroso = false;
 		btnCamino = false;
 	}
-	
+
 	public void setBtnWayPoint(boolean btnWayPoint) {
 		btnInicio = false;
 		btnMeta = false;
@@ -112,10 +113,11 @@ public class Controlador {
 		btnPeligroso = false;
 		btnCamino = false;
 	}
-	
+
 	public boolean isBtnPeligroso() {
 		return btnPeligroso;
 	}
+
 	public void setBtnPeligroso(boolean btnPeligroso) {
 		this.btnPeligroso = btnPeligroso;
 		btnInicio = false;
@@ -125,10 +127,11 @@ public class Controlador {
 		btnWayPoint = false;
 		btnCamino = false;
 	}
-	
+
 	public boolean isBtnCamino() {
 		return btnCamino;
 	}
+
 	public void setBtnCamino(boolean btnCamino) {
 		this.btnCamino = btnCamino;
 		btnInicio = false;
@@ -137,13 +140,15 @@ public class Controlador {
 		btnLibre = false;
 		btnWayPoint = false;
 		btnPeligroso = false;
-		
+
 	}
+
 	public void refresh() {
 		VistaPrincipal.getInstance().refresh();
 	}
-	
-	public void pintarCamino(ArrayList<Nodo> solucion) {
+
+	public void pintarCamino(List<Nodo> solucion) {
+		tablero.setSolucion(solucion);
 		VistaPrincipal.getInstance().pintarCamino(solucion);
 	}
 }

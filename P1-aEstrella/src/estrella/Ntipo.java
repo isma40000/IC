@@ -1,5 +1,5 @@
 package estrella;
 
 public enum Ntipo {
-	NORMAL,INICIO,META,PROHIBIDO;
+	NORMAL,INICIO,META,PROHIBIDO,WAYPOINT,SOLUCION;
 }

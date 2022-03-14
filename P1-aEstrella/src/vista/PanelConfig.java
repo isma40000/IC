@@ -1,89 +1,81 @@
-package Presentacion;
-
-import javax.swing.JPanel;
+package vista;
 
 import java.awt.Color;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Insets;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.border.SoftBevelBorder;
-
-import Negocio.Algoritmo.Algoritmo;
-import Negocio.Objetos.Nodo;
-import Negocio.Objetos.Tablero;
-
-import javax.swing.border.BevelBorder;
 import java.awt.Rectangle;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import java.awt.Point;
-import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+
+import estrella.A_Estrella;
+import estrella.Nodo;
+import estrella.Tablero;
 
 public class PanelConfig extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textNumFilas;
 	private JTextField textNumColumnas;
 
-	/**
-	 * Create the panel.
-	 */
 	public PanelConfig() {
 		setBorder(null);
 		setOpaque(false);
-		setBackground(new Color(245, 255, 250));
+		setBackground(new Color(255, 255, 255));
 		setForeground(new Color(255, 255, 255));
 		setBounds(new Rectangle(2, 2, 2, 2));
 		
 		JLabel lblfilas = new JLabel("Filas:");
-		lblfilas.setFont(new Font("Papyrus", Font.BOLD, 18));
+		lblfilas.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
-		JLabel lblCoumnas = new JLabel("Columnas:");
-		lblCoumnas.setFont(new Font("Papyrus", Font.BOLD, 18));
+		JLabel lblColumnas = new JLabel("Columnas:");
+		lblColumnas.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
 		JLabel lblTablero = new JLabel("Tablero");
 		lblTablero.setForeground(new Color(0, 0, 0));
-		lblTablero.setFont(new Font("Papyrus", Font.BOLD, 20));
+		lblTablero.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		
-		textNumFilas = new JTextField("5");
-		textNumFilas.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textNumFilas = new JTextField("10");
+		textNumFilas.setSelectedTextColor(null);
+		textNumFilas.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
 		textNumFilas.setForeground(new Color(255, 255, 255));
 		textNumFilas.setCaretColor(new Color(255, 255, 255));
 		textNumFilas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textNumFilas.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		textNumFilas.setBackground(new Color(102, 153, 255));
+		textNumFilas.setBackground(new Color(255, 255, 255));
 		textNumFilas.setColumns(10);
 		
 		
-		textNumColumnas = new JTextField("5");
-		textNumColumnas.setForeground(Color.WHITE);
-		textNumColumnas.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textNumColumnas.setColumns(10);
-		textNumColumnas.setCaretColor(Color.WHITE);
+		textNumColumnas = new JTextField("10");
+		textNumColumnas.setSelectedTextColor(null);
+		textNumColumnas.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		textNumColumnas.setForeground(new Color(255, 255, 255));
+		textNumColumnas.setCaretColor(new Color(255, 255, 255));
 		textNumColumnas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textNumColumnas.setBackground(new Color(102, 153, 255));
-		textNumColumnas.setAlignmentX(1.0f);
+		textNumColumnas.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		textNumColumnas.setBackground(new Color(255, 255, 255));
+		textNumColumnas.setColumns(10);
 		
 		JButton btnGenerarTab = new JButton("Generar");
 		btnGenerarTab.addActionListener(new ActionListener() {
@@ -91,77 +83,78 @@ public class PanelConfig extends JPanel {
 				try{
 					int filas = Integer.valueOf(textNumFilas.getText());
 					int columnas = Integer.valueOf(textNumColumnas.getText());
-					if(filas == 0 || columnas == 0)
+					if(filas < 0 || columnas < 0)
 						throw new NumberFormatException();
 					Tablero tablero = new Tablero(filas,columnas);
 					Controlador.getInstance().setTablero(tablero);
 					Controlador.getInstance().refresh();
 				} catch(NumberFormatException nF){
-					JOptionPane.showMessageDialog(null, "Los campos filas y columnas deben contener números mayores que 0.");
+					JOptionPane.showMessageDialog(null, "Los campos filas y columnas deben contener números mayores o iguales que 0.");
 				}
 			}
 		});
-		btnGenerarTab.setBackground(new Color(135, 206, 250));
-		btnGenerarTab.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btnGenerarTab.setBackground(new Color(200, 200, 200));
+		btnGenerarTab.setFont(new Font("Comic Sans MS", Font.PLAIN, 19));
 
 		
 		JLabel lblElementos = new JLabel("Coloca en el tablero  : \r\n");
 		lblElementos.setForeground(Color.BLACK);
-		lblElementos.setFont(new Font("Papyrus", Font.BOLD, 20));
+		lblElementos.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		JLabel lblInicio = new JLabel("Inicio");
 		lblInicio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInicio.setFont(new Font("Papyrus", Font.BOLD, 18));
+		lblInicio.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
 		JLabel lblMeta = new JLabel("Meta");
 		lblMeta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMeta.setFont(new Font("Papyrus", Font.BOLD, 18));
+		lblMeta.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
-		JLabel lblObstaculo = new JLabel("Obstaculo");
+		JLabel lblObstaculo = new JLabel("Prohibido");
 		lblObstaculo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblObstaculo.setFont(new Font("Papyrus", Font.BOLD, 18));
+		lblObstaculo.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
-		JLabel lblWayPoint = new JLabel("Way Point");
+		JLabel lblWayPoint = new JLabel("WayPoint");
 		lblWayPoint.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWayPoint.setFont(new Font("Papyrus", Font.BOLD, 18));
+		lblWayPoint.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
-		JLabel lblLibre = new JLabel("Peligroso");
-		lblLibre.setForeground(new Color(240, 255, 255));
-		lblLibre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLibre.setFont(new Font("Papyrus", Font.BOLD, 18));
+		JLabel lblPeligroso = new JLabel("Peligroso");
+		lblPeligroso.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPeligroso.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+		
+		JLabel lblNormal = new JLabel("Eliminar");
+		lblNormal.setForeground(new Color(240, 255, 255));
+		lblNormal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNormal.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
 		JButton btnComenzar = new JButton("Comenzar");
-		btnComenzar.setBackground(new Color(135, 206, 250));
-		btnComenzar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnComenzar.setBackground(new Color(255, 255, 255));
+		btnComenzar.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
 		btnComenzar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				if(Controlador.getInstance().getTablero().getInicio() == null) {
-					JOptionPane.showMessageDialog(null, "¡Debes colocar un nodo Inicio!", "Error", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No hay nodo inicio", "Error", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else if(Controlador.getInstance().getTablero().getMeta() == null){
-					JOptionPane.showMessageDialog(null, "¡Debes colocar un nodo Meta!", "Error", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No hay nodo meta", "Error", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					Controlador.getInstance().getTablero().borrarCamino(); //por si acaso
 					Controlador.getInstance().refresh();
-					Algoritmo a = new Algoritmo(Controlador.getInstance().getTablero());
-					ArrayList<Nodo> solucion;
+					A_Estrella a = new A_Estrella(Controlador.getInstance().getTablero());
+					List<Nodo> solucion;
 					if(Controlador.getInstance().getTablero().getWayPoints().size() > 0) {
-						solucion = a.executeConWayPoints();
+						solucion = a.estrella_waypoints();
 					}
 					else {
-						solucion = a.execute();
+						solucion = a.estrella();
 					}
 					if(solucion == null){
 						JOptionPane.showMessageDialog(null, "No se puede llegar al nodo Meta", "No hay camino", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else{
-						Controlador.getInstance().setTablero(a.getTablero());
+						Controlador.getInstance().setTablero(a.getBoard());
 						Controlador.getInstance().pintarCamino(solucion);
 						Controlador.getInstance().refresh();
-						Controlador.getInstance().getTablero().actualizaPeligrosos(); //para que los nodos de tipo CAMINO_PELIGROSO vuelvan a ser PELIGROSO solo
 					}
 				}
 				
@@ -169,82 +162,36 @@ public class PanelConfig extends JPanel {
 			
 		});
 		JButton btnReset = new JButton("Reset");
-		btnReset.setBackground(new Color(135, 206, 250));
-		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		Color lightBlue=Color.blue.brighter();
+		btnReset.setBackground(new Color(255, 255, 255));
+		btnReset.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
 		
 		btnReset.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				try{
-					Controlador.getInstance().getTablero().borrarCamino();
-					Controlador.getInstance().refresh();
-				} catch(NumberFormatException nF){
-					JOptionPane.showMessageDialog(null, "Los campos filas y columnas deben contener números mayores que 0.");
-				}
+				Controlador.getInstance().getTablero().resetTablero();
+				Controlador.getInstance().refresh();
 			}
 			
 		});
 		JSeparator separator = new JSeparator();
 		
-		JButton btnColocarProhibido = new JButton("");
-		btnColocarProhibido.setIcon(new ImageIcon(PanelConfig.class.getResource("/Presentacion/prohibido.jpg")));
+		JButton btnColocarProhibido = new JButton("Prohibido");
 		btnColocarProhibido.setVerticalAlignment(SwingConstants.TOP);
-		btnColocarProhibido.setBackground(Color.BLUE.brighter());
-		try {
-			Image image = ImageIO.read(getClass().getResource("prohibido.jpg"));
-			ImageIcon icon = new ImageIcon(image);
-			btnColocarProhibido.setIcon(icon);
-			Auxiliar.ajustarImagen(btnColocarProhibido, image);
-			btnColocarProhibido.addComponentListener(new ComponentAdapter() {
-
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    JButton btn = (JButton) e.getComponent();
-                    Auxiliar.ajustarImagen(btn, image);
-                }
-
-            });
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		btnColocarProhibido.setBackground(Color.RED);
 		btnColocarProhibido.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Controlador.getInstance().setBtnProhibido(true);
-
 			}
 			
 		});
-		JButton btnColocarWayPoint = new JButton("");
-		btnColocarWayPoint.setIcon(new ImageIcon(PanelConfig.class.getResource("/Presentacion/wayPoint.png")));
+		JButton btnColocarWayPoint = new JButton("WayPoint");
 		btnColocarWayPoint.setVerticalAlignment(SwingConstants.TOP);
-		btnColocarWayPoint.setBackground(Color.BLUE.brighter());
-		try {
-			Image image = ImageIO.read(getClass().getResource("wayPoint.png"));
-			ImageIcon icon = new ImageIcon(image);
-			btnColocarWayPoint.setIcon(icon);
-			Auxiliar.ajustarImagen(btnColocarWayPoint, image);
-			btnColocarWayPoint.addComponentListener(new ComponentAdapter() {
-
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    JButton btn = (JButton) e.getComponent();
-                    Auxiliar.ajustarImagen(btn, image);
-                }
-
-            });
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		btnColocarWayPoint.setBackground(Color.YELLOW);
 		btnColocarWayPoint.addActionListener(new ActionListener() {
 
 			@Override
@@ -254,77 +201,32 @@ public class PanelConfig extends JPanel {
 			}
 			
 		});
-		JButton btnColocarPeligroso = new JButton("");
+		JButton btnColocarPeligroso = new JButton("Peligroso");
+		btnColocarPeligroso.setVerticalAlignment(SwingConstants.TOP);
+		btnColocarPeligroso.setBackground(Color.ORANGE);
 		btnColocarPeligroso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 				Controlador.getInstance().setBtnPeligroso(true);
-
 			}
 		});
-		btnColocarPeligroso.setIcon(new ImageIcon(PanelConfig.class.getResource("/Presentacion/peligroso.jpg")));
-		btnColocarPeligroso.setVerticalAlignment(SwingConstants.TOP);
-		btnColocarPeligroso.setBackground(Color.BLUE.brighter());
-		try {
-			Image image = ImageIO.read(getClass().getResource("peligroso.jpg"));
-			ImageIcon icon = new ImageIcon(image);
-			btnColocarPeligroso.setIcon(icon);
-			Auxiliar.ajustarImagen(btnColocarPeligroso, image);
-			btnColocarPeligroso.addComponentListener(new ComponentAdapter() {
-
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    JButton btn = (JButton) e.getComponent();
-                    Auxiliar.ajustarImagen(btn, image);
-                }
-
-            });
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
 		
-		JButton btnColocarLibre = new JButton("");
-		btnColocarLibre.setVerticalAlignment(SwingConstants.TOP);
-		btnColocarLibre.setBackground(new Color(0, 0, 255));
-		btnColocarLibre.addActionListener(new ActionListener() {
+		JButton btnColocarNormal = new JButton("");
+		btnColocarNormal.setVerticalAlignment(SwingConstants.TOP);
+		btnColocarNormal.setBackground(Color.WHITE);
+		btnColocarNormal.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Controlador.getInstance().setBtnLibre(true);
-
-				
 			}
 			
 		});
-		JLabel lblLibre_1 = new JLabel("Eliminar");
-		lblLibre_1.setForeground(new Color(240, 255, 255));
-		lblLibre_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLibre_1.setFont(new Font("Papyrus", Font.BOLD, 18));
-		
-		JButton btnColocarInicio = new JButton("");
-		btnColocarInicio.setIcon(new ImageIcon(PanelConfig.class.getResource("/Presentacion/inicio.png")));
+	
+		JButton btnColocarInicio = new JButton("Inicio");
 		btnColocarInicio.setVerticalAlignment(SwingConstants.TOP);
-		btnColocarInicio.setBackground(Color.BLUE.brighter());
-		try {
-			Image image = ImageIO.read(getClass().getResource("inicio.png"));
-			ImageIcon icon = new ImageIcon(image);
-			btnColocarInicio.setIcon(icon);
-			Auxiliar.ajustarImagen(btnColocarInicio, image);
-			btnColocarInicio.addComponentListener(new ComponentAdapter() {
-
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    JButton btn = (JButton) e.getComponent();
-                    Auxiliar.ajustarImagen(btn, image);
-                }
-
-            });
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		btnColocarInicio.setBackground(Color.BLUE);
 		btnColocarInicio.addActionListener(new ActionListener() {
 
 			@Override
@@ -334,35 +236,15 @@ public class PanelConfig extends JPanel {
 					Controlador.getInstance().setBtnInicio(true);
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "¡Ya existe un nodo Inicio! Pero puedes eliminarlo y colocarlo de nuevo");
+					JOptionPane.showMessageDialog(null, "Si quieres cambiar el inicio elimínalo y colócalo de nuevo");
 
 				}
 			}
 			
 		});
-		JButton btnColocarMeta = new JButton("");
-		btnColocarMeta.setIcon(new ImageIcon(PanelConfig.class.getResource("/Presentacion/meta.png")));
+		JButton btnColocarMeta = new JButton("Meta");
 		btnColocarMeta.setVerticalAlignment(SwingConstants.TOP);
-		btnColocarMeta.setBackground(Color.BLUE.brighter());
-		try {
-			Image image = ImageIO.read(getClass().getResource("meta.png"));
-			ImageIcon icon = new ImageIcon(image);
-			btnColocarMeta.setIcon(icon);
-			Auxiliar.ajustarImagen(btnColocarMeta, image);
-			btnColocarMeta.addComponentListener(new ComponentAdapter() {
-
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    JButton btn = (JButton) e.getComponent();
-                    Auxiliar.ajustarImagen(btn, image);
-                }
-
-            });
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		btnColocarMeta.setBackground(Color.BLUE.darker());
 		btnColocarMeta.addActionListener(new ActionListener() {
 
 			@Override
@@ -372,7 +254,7 @@ public class PanelConfig extends JPanel {
 					Controlador.getInstance().setBtnMeta(true);
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "¡Ya existe un nodo Meta! Pero puedes eliminarlo y colocarlo de nuevo");
+					JOptionPane.showMessageDialog(null, "Si quieres cambiar la meta elimínala y colócala de nuevo");
 					}
 				}			
 		});
@@ -388,7 +270,7 @@ public class PanelConfig extends JPanel {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(43)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblCoumnas, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblColumnas, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblfilas, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
 							.addGap(38)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -408,7 +290,7 @@ public class PanelConfig extends JPanel {
 									.addGroup(groupLayout.createSequentialGroup()
 										.addGap(53)
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(lblLibre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(lblPeligroso, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 											.addComponent(btnColocarPeligroso, 0, 0, Short.MAX_VALUE)
 											.addComponent(btnColocarProhibido, 0, 0, Short.MAX_VALUE)
 											.addComponent(lblObstaculo, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
@@ -423,9 +305,9 @@ public class PanelConfig extends JPanel {
 											.addComponent(lblWayPoint, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 											.addGroup(groupLayout.createSequentialGroup()
 												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(lblLibre_1, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+												.addComponent(lblNormal, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
 											.addComponent(btnColocarWayPoint, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-											.addComponent(btnColocarLibre, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE))
+											.addComponent(btnColocarNormal, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE))
 										.addGap(65))
 									.addComponent(btnReset, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
@@ -447,7 +329,7 @@ public class PanelConfig extends JPanel {
 										.addComponent(textNumFilas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblCoumnas, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblColumnas, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 								.addComponent(textNumColumnas, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(48)
@@ -477,11 +359,11 @@ public class PanelConfig extends JPanel {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnColocarPeligroso, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnColocarLibre, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnColocarNormal, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblLibre)
-						.addComponent(lblLibre_1, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+						.addComponent(lblPeligroso)
+						.addComponent(lblNormal, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
 					.addGap(15)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnComenzar)

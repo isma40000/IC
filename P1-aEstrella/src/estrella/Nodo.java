@@ -12,9 +12,7 @@ public class Nodo implements Comparable<Nodo> {
 	private double h;
 	/** Coste para comparar */
 	private double f;
-
-//	/** más adelante*/
-//	private double peligro;
+	private boolean peligroso;
 
 
 	public Nodo(int x, int y, double h) {
@@ -25,14 +23,8 @@ public class Nodo implements Comparable<Nodo> {
 		g = Double.MAX_VALUE;
 		this.h = h;
 		f = Double.MAX_VALUE;
+		peligroso = false;
 	}
-
-//	public double getdMeta() {
-//		return dMeta;
-//	}
-//	public void setdMeta(double dMeta) {
-//		this.dMeta = dMeta;
-//	}
 
 	public int getX() {
 		return x;
@@ -55,6 +47,9 @@ public class Nodo implements Comparable<Nodo> {
 	}
 
 	public double getF() {
+		if(this.peligroso) {
+			return f+1;
+		}
 		return f;
 	}
 
@@ -89,11 +84,20 @@ public class Nodo implements Comparable<Nodo> {
 	public void setNodoAnt(Nodo nodoAnt) {
 		this.nodoAnt = nodoAnt;
 	}
+	public void setPeligroso() {
+		this.peligroso = true;
+	}
+	public void notPeligroso() {
+		this.peligroso = false;
+	}
+	public boolean isPeligroso() {
+		return this.peligroso;
+	}
 
 	@Override
 	public int compareTo(Nodo o) {
 		// TODO Auto-generated method stub
-		if (f < o.getF()) {
+		if (this.getF() < o.getF()) {
 			return 1;
 		} else {
 			return -1;
