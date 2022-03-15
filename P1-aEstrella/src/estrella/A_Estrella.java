@@ -43,7 +43,6 @@ public class A_Estrella {
 		Nodo inicio = board.getInicio();
 
 		abierta.add(inicio);
-		// cerrada.add(inicio);
 		while (!cerrada.contains(board.getMeta()) && !abierta.isEmpty()) {
 			Nodo nodoExp = abierta.remove();
 			if (nodoExp.getX() == 9 && nodoExp.getY() == 9) {
