@@ -3,19 +3,13 @@ package vista;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,6 +23,7 @@ import javax.swing.border.SoftBevelBorder;
 
 import estrella.A_Estrella;
 import estrella.Nodo;
+import estrella.Ntipo;
 import estrella.Tablero;
 
 public class PanelConfig extends JPanel {
@@ -59,7 +54,6 @@ public class PanelConfig extends JPanel {
 		textNumFilas = new JTextField("10");
 		textNumFilas.setSelectedTextColor(null);
 		textNumFilas.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		textNumFilas.setForeground(new Color(255, 255, 255));
 		textNumFilas.setCaretColor(new Color(255, 255, 255));
 		textNumFilas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textNumFilas.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -70,7 +64,6 @@ public class PanelConfig extends JPanel {
 		textNumColumnas = new JTextField("10");
 		textNumColumnas.setSelectedTextColor(null);
 		textNumColumnas.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		textNumColumnas.setForeground(new Color(255, 255, 255));
 		textNumColumnas.setCaretColor(new Color(255, 255, 255));
 		textNumColumnas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textNumColumnas.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -121,7 +114,6 @@ public class PanelConfig extends JPanel {
 		lblPeligroso.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
 		JLabel lblNormal = new JLabel("Eliminar");
-		lblNormal.setForeground(new Color(240, 255, 255));
 		lblNormal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNormal.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		
@@ -148,7 +140,7 @@ public class PanelConfig extends JPanel {
 					else {
 						solucion = a.estrella();
 					}
-					if(solucion == null){
+					if(solucion.isEmpty()){
 						JOptionPane.showMessageDialog(null, "No se puede llegar al nodo Meta", "No hay camino", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else{
@@ -185,7 +177,7 @@ public class PanelConfig extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Controlador.getInstance().setBtnProhibido(true);
+				Controlador.getInstance().setTipoBoton(Ntipo.PROHIBIDO);
 			}
 			
 		});
@@ -197,7 +189,7 @@ public class PanelConfig extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Controlador.getInstance().setBtnWayPoint(true);
+				Controlador.getInstance().setTipoBoton(Ntipo.WAYPOINT);
 			}
 			
 		});
@@ -207,7 +199,8 @@ public class PanelConfig extends JPanel {
 		btnColocarPeligroso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Controlador.getInstance().setBtnPeligroso(true);
+				Controlador.getInstance().setTipoBoton(Ntipo.NORMAL);
+				Controlador.getInstance().setPeligroso(true);
 			}
 		});
 		
@@ -219,7 +212,7 @@ public class PanelConfig extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Controlador.getInstance().setBtnLibre(true);
+				Controlador.getInstance().setTipoBoton(Ntipo.NORMAL);
 			}
 			
 		});
@@ -233,11 +226,10 @@ public class PanelConfig extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(Controlador.getInstance().getTablero().getInicio() == null){
-					Controlador.getInstance().setBtnInicio(true);
+					Controlador.getInstance().setTipoBoton(Ntipo.INICIO);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Si quieres cambiar el inicio elimínalo y colócalo de nuevo");
-
 				}
 			}
 			
@@ -251,7 +243,7 @@ public class PanelConfig extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(Controlador.getInstance().getTablero().getMeta() == null){
-					Controlador.getInstance().setBtnMeta(true);
+					Controlador.getInstance().setTipoBoton(Ntipo.META);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Si quieres cambiar la meta elimínala y colócala de nuevo");

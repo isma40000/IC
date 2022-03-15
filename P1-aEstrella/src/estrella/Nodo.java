@@ -97,7 +97,7 @@ public class Nodo implements Comparable<Nodo> {
 	@Override
 	public int compareTo(Nodo o) {
 		// TODO Auto-generated method stub
-		if (this.getF() < o.getF()) {
+		if (this.getF() > o.getF()) {
 			return 1;
 		} else {
 			return -1;

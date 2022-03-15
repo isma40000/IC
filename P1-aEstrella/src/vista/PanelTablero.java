@@ -2,11 +2,14 @@ package vista;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import estrella.Nodo;
 import estrella.Tablero;
 
 public class PanelTablero extends JPanel {
@@ -114,4 +117,50 @@ public class PanelTablero extends JPanel {
 	public void refresh() {
 		this.initGui();
 	}
+	
+	private class ActionListenerImp implements ActionListener {
+		private int i;
+		private int j;
+
+		public ActionListenerImp(int i, int j) {
+			this.i = i;
+			this.j = j;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if(Controlador.getInstance().getTipoBoton()!=null) {
+				Nodo n = new Nodo(i, j,Double.MAX_VALUE);
+				n.setTipo(Controlador.getInstance().getTipoBoton());
+				Controlador.getInstance().getTablero().deleteCell(i, j);
+				
+				switch(Controlador.getInstance().getTipoBoton()) {
+				case INICIO: 
+					Controlador.getInstance().getTablero().setInicio(n); 
+					break;
+				case META: 
+					Controlador.getInstance().getTablero().setMeta(n);
+					break;
+				case NORMAL: 
+					if(Controlador.getInstance().getPeligroso()) {
+						Controlador.getInstance().getTablero().addPeligroso(n);
+					}
+					break;
+				case WAYPOINT: 
+					Controlador.getInstance().getTablero().addWayPoint(n);
+					break;
+				case PROHIBIDO: 
+					Controlador.getInstance().getTablero().setProhibido(n);
+					break;
+				case SOLUCION: break;
+				}
+				Controlador.getInstance().setTipoBoton(null);
+				Controlador.getInstance().setPeligroso(false);
+				colorearBoton(i, j);
+			}
+		}
+
+	}
+	
 }

@@ -56,9 +56,6 @@ public class VistaPrincipal extends JFrame {
 		contentPanel.setLeftComponent(panelConfig);
 		contentPanel.setRightComponent(panelTablero);
 
-		Tablero tablero = new Tablero(10, 10);
-		Controlador.getInstance().setTablero(tablero);
-
 		this.setMinimumSize(new Dimension(1200, 800));
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

@@ -33,7 +33,8 @@ public class Tablero {
 		this.dY = dY;
 		nodos = new Nodo[dX][dY];
 		this.wayPoints = new ArrayList<Nodo>();
-		
+		inicio = null;
+		meta=null;
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
 				nodos[i][j] = new Nodo(i, j,Double.MAX_VALUE);
@@ -43,7 +44,8 @@ public class Tablero {
 	public void resetTablero() {
 		nodos = new Nodo[dX][dY];
 		this.wayPoints = new ArrayList<Nodo>();
-		
+		inicio=null;
+		meta=null;
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
 				nodos[i][j] = new Nodo(i, j,Double.MAX_VALUE);
@@ -63,6 +65,9 @@ public class Tablero {
 
 	public Nodo getNodo(int x, int y) {
 		return nodos[x][y];
+	}
+	public void setNodo(int x, int y,Nodo node) {
+		nodos[x][y]=node;
 	}
 	
 	public ArrayList<Nodo> getWayPoints() {
@@ -105,6 +110,17 @@ public class Tablero {
 		nodos[n.getX()][n.getY()].notPeligroso();
 	}
 	
+	public void deleteCell(int i, int j) {
+		// TODO Auto-generated method stub
+		switch (nodos[i][j].getTipo()) {
+			case WAYPOINT: this.wayPoints.remove(nodos[i][j]); break;
+			case INICIO: this.inicio = null;break;
+			case META: this.meta = null; break;
+			default:break;
+		}
+		nodos[i][j] = new Nodo(i,j,nodos[i][j].getH());
+	}
+	
 	public double getDistanceBetPoints(int xa, int ya, int xb, int yb) {
 		return Math.sqrt(Math.pow((xb - xa),2) + Math.pow((yb - ya),2));
 	}
@@ -128,6 +144,9 @@ public class Tablero {
 				nodos[i][j].setH(getDistanceBetPoints(i, j, meta.getX(), meta.getY()));
 			}
 		}
+		nodos[meta.getX()][meta.getY()].setTipo(Ntipo.META);
+		nodos[meta.getX()][meta.getY()].setH(0);
+		this.meta.setTipo(Ntipo.META);
 		this.meta.setH(0);
 	}
 
@@ -142,6 +161,9 @@ public class Tablero {
 				nodos[i][j].setG(Double.MAX_VALUE);
 			}
 		}
+		nodos[inicio.getX()][inicio.getY()].setTipo(Ntipo.INICIO);
+		nodos[inicio.getX()][inicio.getY()].setG(0);
+		this.inicio.setTipo(Ntipo.INICIO);
 		this.inicio.setG(0);
 	}
 

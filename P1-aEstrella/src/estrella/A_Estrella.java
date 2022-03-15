@@ -28,6 +28,8 @@ public class A_Estrella {
 					nVecino.setG(nodo.getG() + board.getDistanceBetNodes(nodo, nVecino));
 					nVecino.setF(nVecino.getG() + nVecino.getH());
 					nVecino.setNodoAnt(nodo);
+					board.setNodo(x, y, nVecino);
+					if(nVecino.getH()==0)board.setMeta(nVecino);
 					abierta.add(board.getNodo(x, y));
 				}
 			}
@@ -38,19 +40,24 @@ public class A_Estrella {
 		abierta.clear();
 		cerrada.clear();
 		Nodo inicio = board.getInicio();
-		Nodo meta = board.getMeta();
+		
 		abierta.add(inicio);
 		//cerrada.add(inicio);
-		while (!cerrada.contains(meta) && !abierta.isEmpty()) {
+		while (!cerrada.contains(board.getMeta()) && !abierta.isEmpty()) {
 			Nodo nodoExp = abierta.remove();
+			if(nodoExp.getX()==9 && nodoExp.getY()==9) {
+				System.out.println("Meta en cerrada");
+			}
 			cerrada.add(nodoExp);
-			expandir(nodoExp);
+			if(nodoExp!=board.getMeta()) {
+				expandir(nodoExp);
+			}
 		}
 		List<Nodo> sol = new ArrayList<Nodo>();
-		if(cerrada.contains(meta)) {
+		if(cerrada.contains(board.getMeta())) {
 			//reconstrucción de solución
-			Nodo aux = meta;
-			sol.add(meta);
+			Nodo aux = board.getMeta();
+			sol.add(board.getMeta());
 			while(aux!=inicio) {
 				aux=aux.getNodoAnt();
 				sol.add(0,aux);
