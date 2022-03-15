@@ -3,20 +3,17 @@ package vista;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -40,17 +37,17 @@ public class PanelConfig extends JPanel {
 		setBackground(new Color(255, 255, 255));
 		setForeground(new Color(255, 255, 255));
 		setBounds(new Rectangle(2, 2, 2, 2));
-		
+
 		JLabel lblfilas = new JLabel("Filas:");
 		lblfilas.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
+
 		JLabel lblColumnas = new JLabel("Columnas:");
 		lblColumnas.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
+
 		JLabel lblTablero = new JLabel("Tablero");
 		lblTablero.setForeground(new Color(0, 0, 0));
 		lblTablero.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		
+
 		textNumFilas = new JTextField("10");
 		textNumFilas.setSelectedTextColor(null);
 		textNumFilas.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
@@ -59,8 +56,7 @@ public class PanelConfig extends JPanel {
 		textNumFilas.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		textNumFilas.setBackground(new Color(255, 255, 255));
 		textNumFilas.setColumns(10);
-		
-		
+
 		textNumColumnas = new JTextField("10");
 		textNumColumnas.setSelectedTextColor(null);
 		textNumColumnas.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
@@ -69,54 +65,28 @@ public class PanelConfig extends JPanel {
 		textNumColumnas.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		textNumColumnas.setBackground(new Color(255, 255, 255));
 		textNumColumnas.setColumns(10);
-		
-		JButton btnGenerarTab = new JButton("Generar");
-		btnGenerarTab.addActionListener(new ActionListener() {
+
+		JButton btnCrearTab = new JButton("Crear");
+		btnCrearTab.setVerticalTextPosition(SwingConstants.CENTER);
+		btnCrearTab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try{
+				try {
 					int filas = Integer.valueOf(textNumFilas.getText());
 					int columnas = Integer.valueOf(textNumColumnas.getText());
-					if(filas < 0 || columnas < 0)
+					if (filas < 0 || columnas < 0)
 						throw new NumberFormatException();
-					Tablero tablero = new Tablero(filas,columnas);
+					Tablero tablero = new Tablero(filas, columnas);
 					Controlador.getInstance().setTablero(tablero);
 					Controlador.getInstance().refresh();
-				} catch(NumberFormatException nF){
-					JOptionPane.showMessageDialog(null, "Los campos filas y columnas deben contener números mayores o iguales que 0.");
+				} catch (NumberFormatException nF) {
+					JOptionPane.showMessageDialog(null,
+							"Los campos filas y columnas deben contener números mayores o iguales que 0.");
 				}
 			}
 		});
-		btnGenerarTab.setBackground(new Color(200, 200, 200));
-		btnGenerarTab.setFont(new Font("Comic Sans MS", Font.PLAIN, 19));
+		btnCrearTab.setBackground(new Color(200, 200, 200));
+		btnCrearTab.setFont(new Font("Comic Sans MS", Font.PLAIN, 19));
 
-		
-		JLabel lblElementos = new JLabel("Coloca en el tablero  : \r\n");
-		lblElementos.setForeground(Color.BLACK);
-		lblElementos.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		JLabel lblInicio = new JLabel("Inicio");
-		lblInicio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInicio.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
-		JLabel lblMeta = new JLabel("Meta");
-		lblMeta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMeta.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
-		JLabel lblObstaculo = new JLabel("Prohibido");
-		lblObstaculo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblObstaculo.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
-		JLabel lblWayPoint = new JLabel("WayPoint");
-		lblWayPoint.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWayPoint.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
-		JLabel lblPeligroso = new JLabel("Peligroso");
-		lblPeligroso.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPeligroso.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
-		JLabel lblNormal = new JLabel("Eliminar");
-		lblNormal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNormal.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-		
 		JButton btnComenzar = new JButton("Comenzar");
 		btnComenzar.setBackground(new Color(255, 255, 255));
 		btnComenzar.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
@@ -124,39 +94,36 @@ public class PanelConfig extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(Controlador.getInstance().getTablero().getInicio() == null) {
+				if (Controlador.getInstance().getTablero().getInicio() == null) {
 					JOptionPane.showMessageDialog(null, "No hay nodo inicio", "Error", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else if(Controlador.getInstance().getTablero().getMeta() == null){
+				} else if (Controlador.getInstance().getTablero().getMeta() == null) {
 					JOptionPane.showMessageDialog(null, "No hay nodo meta", "Error", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
+				} else {
 					Controlador.getInstance().refresh();
 					A_Estrella a = new A_Estrella(Controlador.getInstance().getTablero());
 					List<Nodo> solucion;
-					if(Controlador.getInstance().getTablero().getWayPoints().size() > 0) {
+					if (Controlador.getInstance().getTablero().getWayPoints().size() > 0) {
 						solucion = a.estrella_waypoints();
-					}
-					else {
+					} else {
 						solucion = a.estrella();
 					}
-					if(solucion.isEmpty()){
-						JOptionPane.showMessageDialog(null, "No se puede llegar al nodo Meta", "No hay camino", JOptionPane.INFORMATION_MESSAGE);
-					}
-					else{
+					if (solucion.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "No se puede llegar al nodo Meta", "No hay camino",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
 						Controlador.getInstance().setTablero(a.getBoard());
 						Controlador.getInstance().pintarCamino(solucion);
 						Controlador.getInstance().refresh();
 					}
 				}
-				
+
 			}
-			
+
 		});
 		JButton btnReset = new JButton("Reset");
 		btnReset.setBackground(new Color(255, 255, 255));
 		btnReset.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		
+
 		btnReset.addActionListener(new ActionListener() {
 
 			@Override
@@ -165,12 +132,10 @@ public class PanelConfig extends JPanel {
 				Controlador.getInstance().getTablero().resetTablero();
 				Controlador.getInstance().refresh();
 			}
-			
+
 		});
-		JSeparator separator = new JSeparator();
-		
+
 		JButton btnColocarProhibido = new JButton("Prohibido");
-		btnColocarProhibido.setVerticalAlignment(SwingConstants.TOP);
 		btnColocarProhibido.setBackground(Color.RED);
 		btnColocarProhibido.addActionListener(new ActionListener() {
 
@@ -179,10 +144,9 @@ public class PanelConfig extends JPanel {
 				// TODO Auto-generated method stub
 				Controlador.getInstance().setTipoBoton(Ntipo.PROHIBIDO);
 			}
-			
+
 		});
 		JButton btnColocarWayPoint = new JButton("WayPoint");
-		btnColocarWayPoint.setVerticalAlignment(SwingConstants.TOP);
 		btnColocarWayPoint.setBackground(Color.YELLOW);
 		btnColocarWayPoint.addActionListener(new ActionListener() {
 
@@ -191,10 +155,9 @@ public class PanelConfig extends JPanel {
 				// TODO Auto-generated method stub
 				Controlador.getInstance().setTipoBoton(Ntipo.WAYPOINT);
 			}
-			
+
 		});
 		JButton btnColocarPeligroso = new JButton("Peligroso");
-		btnColocarPeligroso.setVerticalAlignment(SwingConstants.TOP);
 		btnColocarPeligroso.setBackground(Color.ORANGE);
 		btnColocarPeligroso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -203,9 +166,8 @@ public class PanelConfig extends JPanel {
 				Controlador.getInstance().setPeligroso(true);
 			}
 		});
-		
-		JButton btnColocarNormal = new JButton("");
-		btnColocarNormal.setVerticalAlignment(SwingConstants.TOP);
+
+		JButton btnColocarNormal = new JButton("Normal");
 		btnColocarNormal.setBackground(Color.WHITE);
 		btnColocarNormal.addActionListener(new ActionListener() {
 
@@ -214,154 +176,58 @@ public class PanelConfig extends JPanel {
 				// TODO Auto-generated method stub
 				Controlador.getInstance().setTipoBoton(Ntipo.NORMAL);
 			}
-			
+
 		});
-	
+
 		JButton btnColocarInicio = new JButton("Inicio");
-		btnColocarInicio.setVerticalAlignment(SwingConstants.TOP);
 		btnColocarInicio.setBackground(Color.BLUE);
 		btnColocarInicio.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(Controlador.getInstance().getTablero().getInicio() == null){
+				if (Controlador.getInstance().getTablero().getInicio() == null) {
 					Controlador.getInstance().setTipoBoton(Ntipo.INICIO);
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Si quieres cambiar el inicio elimínalo y colócalo de nuevo");
 				}
 			}
-			
+
 		});
 		JButton btnColocarMeta = new JButton("Meta");
-		btnColocarMeta.setVerticalAlignment(SwingConstants.TOP);
 		btnColocarMeta.setBackground(Color.BLUE.darker());
 		btnColocarMeta.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(Controlador.getInstance().getTablero().getMeta() == null){
+				if (Controlador.getInstance().getTablero().getMeta() == null) {
 					Controlador.getInstance().setTipoBoton(Ntipo.META);
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Si quieres cambiar la meta elimínala y colócala de nuevo");
-					}
-				}			
+				}
+			}
 		});
-		
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(136)
-							.addComponent(lblTablero))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(43)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblColumnas, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblfilas, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-							.addGap(38)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(textNumColumnas, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textNumFilas, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addComponent(btnGenerarTab))
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGap(72)
-								.addComponent(lblElementos, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(btnComenzar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addGroup(groupLayout.createSequentialGroup()
-										.addGap(53)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(lblPeligroso, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(btnColocarPeligroso, 0, 0, Short.MAX_VALUE)
-											.addComponent(btnColocarProhibido, 0, 0, Short.MAX_VALUE)
-											.addComponent(lblObstaculo, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-											.addComponent(lblInicio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(btnColocarInicio, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE))))
-								.addGap(18)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(btnColocarMeta, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblMeta, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-											.addComponent(lblWayPoint, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addGroup(groupLayout.createSequentialGroup()
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(lblNormal, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
-											.addComponent(btnColocarWayPoint, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-											.addComponent(btnColocarNormal, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE))
-										.addGap(65))
-									.addComponent(btnReset, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTablero)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(34)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblfilas, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-										.addComponent(textNumFilas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblColumnas, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textNumColumnas, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(48)
-							.addComponent(btnGenerarTab)))
-					.addGap(19)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 8, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblElementos, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnColocarInicio, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnColocarMeta, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblInicio)
-						.addComponent(lblMeta, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnColocarProhibido, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblObstaculo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnColocarWayPoint, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblWayPoint, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnColocarPeligroso, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnColocarNormal, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPeligroso)
-						.addComponent(lblNormal, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-					.addGap(15)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnComenzar)
-						.addComponent(btnReset, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-					.addGap(21))
-		);
-		setLayout(groupLayout);
+		GridLayout experimentLayout = new GridLayout(7, 2);
+
+		setLayout(experimentLayout);
+		this.add(lblTablero);
+		this.add(btnCrearTab);
+		this.add(lblfilas);
+		this.add(textNumFilas);
+		this.add(lblColumnas);
+		this.add(textNumColumnas);
+		this.add(btnColocarInicio);
+		this.add(btnColocarMeta);
+
+		this.add(btnColocarProhibido);
+		this.add(btnColocarWayPoint);
+
+		this.add(btnColocarPeligroso);
+		this.add(btnColocarNormal);
+
+		this.add(btnComenzar);
+		this.add(btnReset);
+		this.repaint();
 	}
 }

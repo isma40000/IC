@@ -26,10 +26,9 @@ public class Controlador {
 		peligroso = false;
 	}
 
-
 	public Tablero getTablero() {
 		if (tablero == null) {
-			tablero = new Tablero(4, 4);
+			tablero = new Tablero(10, 10);
 		}
 		return tablero;
 	}
@@ -37,22 +36,23 @@ public class Controlador {
 	public void setTablero(Tablero tablero) {
 		this.tablero = tablero;
 	}
-	
+
 	public void setTipoBoton(Ntipo tipo) {
-		this.tipoboton=tipo;
+		this.tipoboton = tipo;
 	}
-	
+
 	public Ntipo getTipoBoton() {
 		return this.tipoboton;
 	}
-	
-	public void setPeligroso(boolean peligroso){
-		this.peligroso=peligroso;
+
+	public void setPeligroso(boolean peligroso) {
+		this.peligroso = peligroso;
 	}
-	
-	public boolean getPeligroso(){
+
+	public boolean getPeligroso() {
 		return this.peligroso;
 	}
+
 	public void refresh() {
 		VistaPrincipal.getInstance().refresh();
 	}

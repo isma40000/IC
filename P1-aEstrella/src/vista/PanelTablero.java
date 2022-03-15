@@ -117,7 +117,7 @@ public class PanelTablero extends JPanel {
 	public void refresh() {
 		this.initGui();
 	}
-	
+
 	private class ActionListenerImp implements ActionListener {
 		private int i;
 		private int j;
@@ -130,30 +130,31 @@ public class PanelTablero extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if(Controlador.getInstance().getTipoBoton()!=null) {
-				Nodo n = new Nodo(i, j,Double.MAX_VALUE);
+			if (Controlador.getInstance().getTipoBoton() != null) {
+				Nodo n = new Nodo(i, j, Double.MAX_VALUE);
 				n.setTipo(Controlador.getInstance().getTipoBoton());
 				Controlador.getInstance().getTablero().deleteCell(i, j);
-				
-				switch(Controlador.getInstance().getTipoBoton()) {
-				case INICIO: 
-					Controlador.getInstance().getTablero().setInicio(n); 
+
+				switch (Controlador.getInstance().getTipoBoton()) {
+				case INICIO:
+					Controlador.getInstance().getTablero().setInicio(n);
 					break;
-				case META: 
+				case META:
 					Controlador.getInstance().getTablero().setMeta(n);
 					break;
-				case NORMAL: 
-					if(Controlador.getInstance().getPeligroso()) {
+				case NORMAL:
+					if (Controlador.getInstance().getPeligroso()) {
 						Controlador.getInstance().getTablero().addPeligroso(n);
 					}
 					break;
-				case WAYPOINT: 
+				case WAYPOINT:
 					Controlador.getInstance().getTablero().addWayPoint(n);
 					break;
-				case PROHIBIDO: 
+				case PROHIBIDO:
 					Controlador.getInstance().getTablero().setProhibido(n);
 					break;
-				case SOLUCION: break;
+				case SOLUCION:
+					break;
 				}
 				Controlador.getInstance().setTipoBoton(null);
 				Controlador.getInstance().setPeligroso(false);
@@ -162,5 +163,5 @@ public class PanelTablero extends JPanel {
 		}
 
 	}
-	
+
 }

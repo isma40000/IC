@@ -15,46 +15,49 @@ public class Tablero {
 		this.dY = dY;
 		nodos = new Nodo[dX][dY];
 		this.wayPoints = new ArrayList<Nodo>();
-		
+
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
 				nodos[i][j] = new Nodo(i, j, getDistanceBetPoints(i, j, mX, mY));
 			}
 		}
 		inicio = nodos[iX][iY];
-		meta = nodos[mX] [mY];
+		meta = nodos[mX][mY];
 		inicio.setTipo(Ntipo.INICIO);
 		meta.setTipo(Ntipo.META);
 
 	}
-	
+
 	public Tablero(int dX, int dY) {
 		this.dX = dX;
 		this.dY = dY;
 		nodos = new Nodo[dX][dY];
 		this.wayPoints = new ArrayList<Nodo>();
 		inicio = null;
-		meta=null;
+		meta = null;
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
-				nodos[i][j] = new Nodo(i, j,Double.MAX_VALUE);
+				nodos[i][j] = new Nodo(i, j, Double.MAX_VALUE);
 			}
 		}
 	}
+
 	public void resetTablero() {
 		nodos = new Nodo[dX][dY];
 		this.wayPoints = new ArrayList<Nodo>();
-		inicio=null;
-		meta=null;
+		inicio = null;
+		meta = null;
 		for (int i = 0; i < dX; i++) {
 			for (int j = 0; j < dY; j++) {
-				nodos[i][j] = new Nodo(i, j,Double.MAX_VALUE);
+				nodos[i][j] = new Nodo(i, j, Double.MAX_VALUE);
 			}
 		}
 	}
+
 	public void putProhib(int x, int y) {
 		nodos[x][y].setTipo(Ntipo.PROHIBIDO);
 	}
+
 	public boolean corrCoord(int x, int y) {
 		return x >= 0 && x < dX && y >= 0 && y < dY;
 	}
@@ -66,67 +69,74 @@ public class Tablero {
 	public Nodo getNodo(int x, int y) {
 		return nodos[x][y];
 	}
-	public void setNodo(int x, int y,Nodo node) {
-		nodos[x][y]=node;
+
+	public void setNodo(int x, int y, Nodo node) {
+		nodos[x][y] = node;
 	}
-	
+
 	public ArrayList<Nodo> getWayPoints() {
 		return wayPoints;
 	}
-	
+
 	public void addWayPoint(Nodo m) {
 		this.wayPoints.add(m);
 		nodos[m.getX()][m.getY()].setTipo(Ntipo.WAYPOINT);
 	}
-	
+
 	public void deleteWayPoint(int i, int j) {
 		this.wayPoints.remove(nodos[i][j]);
 		nodos[i][j].setTipo(Ntipo.NORMAL);
 	}
-	
+
 	public void setProhibido(Nodo m) {
-		if(!m.equals(this.inicio) && !m.equals(this.meta)) {
+		if (!m.equals(this.inicio) && !m.equals(this.meta)) {
 			nodos[m.getX()][m.getY()].setTipo(Ntipo.PROHIBIDO);
-		}
-		else {
+		} else {
 			System.out.println("No puedes poner la meta ni el inicio como prohibido");
 		}
 	}
-	
+
 	public void borrarProhibida(int i, int j) {
 		nodos[i][j].setTipo(Ntipo.NORMAL);
 	}
-	
+
 	public void addPeligroso(Nodo n) {
-		if(!n.equals(this.inicio) && !n.equals(this.meta) && n.getTipo()!=Ntipo.PROHIBIDO && n.getTipo()!=Ntipo.WAYPOINT) {
+		if (!n.equals(this.inicio) && !n.equals(this.meta) && n.getTipo() != Ntipo.PROHIBIDO
+				&& n.getTipo() != Ntipo.WAYPOINT) {
 			nodos[n.getX()][n.getY()].setPeligroso();
-		}
-		else {
+		} else {
 			System.out.println("No puedes poner la meta ni el inicio ni nodos prohibidos ni waypoints como peligrosos");
 		}
 	}
-	
+
 	public void removePeligroso(Nodo n) {
 		nodos[n.getX()][n.getY()].notPeligroso();
 	}
-	
+
 	public void deleteCell(int i, int j) {
 		// TODO Auto-generated method stub
 		switch (nodos[i][j].getTipo()) {
-			case WAYPOINT: this.wayPoints.remove(nodos[i][j]); break;
-			case INICIO: this.inicio = null;break;
-			case META: this.meta = null; break;
-			default:break;
+		case WAYPOINT:
+			this.wayPoints.remove(nodos[i][j]);
+			break;
+		case INICIO:
+			this.inicio = null;
+			break;
+		case META:
+			this.meta = null;
+			break;
+		default:
+			break;
 		}
-		nodos[i][j] = new Nodo(i,j,nodos[i][j].getH());
+		nodos[i][j] = new Nodo(i, j, nodos[i][j].getH());
 	}
-	
+
 	public double getDistanceBetPoints(int xa, int ya, int xb, int yb) {
-		return Math.sqrt(Math.pow((xb - xa),2) + Math.pow((yb - ya),2));
+		return Math.sqrt(Math.pow((xb - xa), 2) + Math.pow((yb - ya), 2));
 	}
 
 	public double getDistanceBetNodes(Nodo a, Nodo b) {
-		return Math.sqrt(Math.pow((b.getX() - a.getX()),2) + Math.pow((b.getY() - a.getY()),2));
+		return Math.sqrt(Math.pow((b.getX() - a.getX()), 2) + Math.pow((b.getY() - a.getY()), 2));
 	}
 
 	public void setNodos(Nodo[][] nodos) {
@@ -182,11 +192,12 @@ public class Tablero {
 	public void setdY(int dY) {
 		this.dY = dY;
 	}
-	
+
 	public void setSolucion(List<Nodo> solucion) {
-		for(Nodo a : solucion) {
+		for (Nodo a : solucion) {
 			Nodo b = nodos[a.getX()][a.getY()];
-			if(b.getTipo()==Ntipo.NORMAL) b.setTipo(Ntipo.SOLUCION);
+			if (b.getTipo() == Ntipo.NORMAL)
+				b.setTipo(Ntipo.SOLUCION);
 		}
 	}
 

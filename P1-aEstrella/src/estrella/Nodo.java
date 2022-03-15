@@ -14,7 +14,6 @@ public class Nodo implements Comparable<Nodo> {
 	private double f;
 	private boolean peligroso;
 
-
 	public Nodo(int x, int y, double h) {
 		this.x = x;
 		this.y = y;
@@ -47,8 +46,8 @@ public class Nodo implements Comparable<Nodo> {
 	}
 
 	public double getF() {
-		if(this.peligroso) {
-			return f+1;
+		if (this.peligroso) {
+			return f + 1;
 		}
 		return f;
 	}
@@ -84,12 +83,15 @@ public class Nodo implements Comparable<Nodo> {
 	public void setNodoAnt(Nodo nodoAnt) {
 		this.nodoAnt = nodoAnt;
 	}
+
 	public void setPeligroso() {
 		this.peligroso = true;
 	}
+
 	public void notPeligroso() {
 		this.peligroso = false;
 	}
+
 	public boolean isPeligroso() {
 		return this.peligroso;
 	}

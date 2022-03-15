@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
 import estrella.Nodo;
-import estrella.Tablero;
 
 public class VistaPrincipal extends JFrame {
 
