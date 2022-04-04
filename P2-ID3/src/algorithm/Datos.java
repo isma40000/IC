@@ -34,6 +34,8 @@ public class Datos {
 //	}
 
 	public Datos(ArrayList<Ejemplo> ejemplos, ArrayList<String> atributos, String clasePos) {
+		valoresAtributos = new HashMap<String, ArrayList<Pair>>();
+		valoresRegistrados = new HashMap<String, ArrayList<String>>(); 
 		this.ejemplos = ejemplos;
 		this.atributos = atributos;
 		this.clase = atributos.get(atributos.size() - 1);
