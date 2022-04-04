@@ -1,64 +1,37 @@
 package algorithm;
 
-import atributos.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Ejemplo {
-	
-	private Humedad humedad;
-	private Temperatura temperatura;
-	private TiempoExterior tExterior;
-	private Viento viento;
-	private boolean jugar;
-	
-	public Ejemplo(Humedad humedad,Temperatura temperatura,TiempoExterior tExterior,Viento viento,boolean jugar) {
-		this.humedad = humedad;
-		this.temperatura = temperatura;
-		this.tExterior = tExterior;
-		this.viento = viento;
-		this.jugar = jugar;
+
+	HashMap<String, String> atributos;
+
+	public Ejemplo(ArrayList<String> atributo, ArrayList<String> valor) {
+		this.atributos = new HashMap<String, String>();
+		for (int i = 0; i < valor.size(); i++) {
+			this.atributos.put(atributo.get(i), valor.get(i));
+		}
 	}
 
-	public Humedad getHumedad() {
-		return humedad;
+	public HashMap<String, String> getEjemplo() {
+		return atributos;
 	}
 
-	public void setHumedad(Humedad humedad) {
-		this.humedad = humedad;
+	public void setEjemplo(HashMap<String, String> ejemplo) {
+		this.atributos = ejemplo;
 	}
 
-	public Temperatura getTemperatura() {
-		return temperatura;
+	public void addAtributo(String atributo, String valor) {
+		atributos.put(atributo, valor);
 	}
 
-	public void setTemperatura(Temperatura temperatura) {
-		this.temperatura = temperatura;
+	public String getValorAtributo(String atributo) {
+		return atributos.get(atributo);
 	}
 
-	public TiempoExterior gettExterior() {
-		return tExterior;
+	public void eliminarAtributo(String atributo) {
+		this.atributos.remove(atributo);
 	}
 
-	public void settExterior(TiempoExterior tExterior) {
-		this.tExterior = tExterior;
-	}
-
-	public Viento getViento() {
-		return viento;
-	}
-
-	public void setViento(Viento viento) {
-		this.viento = viento;
-	}
-
-	public boolean isJugar() {
-		return jugar;
-	}
-
-	public void setJugar(boolean jugar) {
-		this.jugar = jugar;
-	}
-	
-	
-	
 }
