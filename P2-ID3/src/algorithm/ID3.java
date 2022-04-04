@@ -11,13 +11,14 @@ public class ID3 {
 	private String claseNeg;
 	private HashMap<String, ArrayList<String>> valoresAtributos;
 	private Nodo arbol = new Nodo();
-	public ID3(String clasePos , String claseNeg,HashMap<String, ArrayList<String>> valoresAtributos) {
-		this.clasePos=clasePos;
-		this.claseNeg=claseNeg;
+
+	public ID3(String clasePos, String claseNeg, HashMap<String, ArrayList<String>> valoresAtributos) {
+		this.clasePos = clasePos;
+		this.claseNeg = claseNeg;
 		this.valoresAtributos = valoresAtributos;
 	}
 
-	public void hacerID3(ArrayList<String> lAtributos, ArrayList<Ejemplo> lEjemplos, int iteracion,Nodo arbol) {
+	public void hacerID3(ArrayList<String> lAtributos, ArrayList<Ejemplo> lEjemplos, int iteracion, Nodo arbol) {
 
 		if (lEjemplos.isEmpty()) {
 			arbol.setRaiz("No hay ejemplos");
@@ -27,20 +28,18 @@ public class ID3 {
 			if (lAtributos.isEmpty()) {
 				arbol.setRaiz("ERROR");
 				arbol.setHoja(true);
-			}
-			else if (datos.positivos()) {
+			} else if (datos.positivos()) {
 				arbol.setRaiz(clasePos);
 				arbol.setHoja(true);
-			}
-			else if (datos.negativos()) {
+			} else if (datos.negativos()) {
 				arbol.setRaiz(claseNeg);
 				arbol.setHoja(true);
 			}
-			String mejor= "";
+			String mejor = "";
 			double merit = Double.MAX_VALUE;
 			System.out.println("Iteracion " + iteracion);
 			System.out.println("------------------------------");
-			pintarRama(arbol,arbol.getRamaPadre());
+			pintarRama(arbol, arbol.getRamaPadre());
 			System.out.println("");
 			for (String a : lAtributos) {
 				double am = datos.merito(a);
@@ -48,29 +47,29 @@ public class ID3 {
 					merit = am;
 					mejor = a;
 				}
-				System.out.println(a +" = " + am);
+				System.out.println(a + " = " + am);
 			}
 			System.out.println("------------------------------");
 			arbol.setRaiz(mejor);
-			for(String a : valoresAtributos.get(mejor)) {
-				arbol.getRamas().put(a,new Nodo(arbol,a));
-				hacerID3(datos.getAtributosRestantes(mejor),datos.getEjemplosRestantes(mejor,a),iteracion+1,arbol.getRamas().get(a));
+			for (String a : valoresAtributos.get(mejor)) {
+				arbol.getRamas().put(a, new Nodo(arbol, a));
+				hacerID3(datos.getAtributosRestantes(mejor), datos.getEjemplosRestantes(mejor, a), iteracion + 1,
+						arbol.getRamas().get(a));
 			}
 		}
 	}
-	
+
 	public void pintarRama(Nodo arbol, String ramaHijo) {
-		while(arbol.getPadre() != null) {
-			pintarRama(arbol.getPadre(),arbol.getRamaPadre());
+		while (arbol.getPadre() != null) {
+			pintarRama(arbol.getPadre(), arbol.getRamaPadre());
 		}
-		if(arbol.getPadre()==null) {
+		if (arbol.getPadre() == null) {
 			System.out.print("Rama -> " + arbol.getRaiz() + " = " + ramaHijo);
-		}else {
-			System.out.print(", "+ arbol.getRaiz() + " = " + ramaHijo);
+		} else {
+			System.out.print(", " + arbol.getRaiz() + " = " + ramaHijo);
 		}
-		
-	}
-	template<typename T>
+
+	}template<typename T>
 	void BinTree<T>::levelorder() const {
 		std::queue<NodePointer> pending;
 		if (root_node != nullptr) {
@@ -88,32 +87,43 @@ public class ID3 {
 			}
 		}
 	}
+
 	public void pintarArbol(Nodo arbol) {
-		int contador=0;
-		Queue<Integer> numRamas= new LinkedList<Integer>();
-		Queue<Nodo> cola = new LinkedList<Nodo>();
+		ArrayList<Integer> numRamas = new ArrayList<Integer>();
+		Queue<Pair2> cola = new LinkedList<Pair2>();
 		int altura = 0;
-		if(arbol.getRaiz()!="") {
-			cola.add(arbol);
+		int recorridos = 0;
+
+		for (int i = 0; i < 1000; i++) {
+			numRamas.add(0);
+		}
+		if (arbol.getRaiz() != "") {
+			cola.add(new Pair2(arbol,0));
 		}
 		System.out.print("|| ");
-		while(!cola.isEmpty()) {
-			Nodo actual = cola.remove();
-			System.out.print(actual.getRaiz()+" || ");
-			contador++;
-			if(contador>=numRamas.element()) {
-				System.out.println("");
+		while (!cola.isEmpty()) {
+			Pair2 removido = cola.remove();
+			int alturAct = removido.getSecond();
+			Nodo actual = removido.getFirst();
+			System.out.print(actual.getRaiz() + " ");
+			recorridos+=1;
+			if (recorridos >= numRamas.get(altura)) {
 				System.out.print("|| ");
-				contador=0;
-				numRamas.remove();
+				System.out.println();
+				System.out.print("|| ");
+				altura += 1;
+				recorridos = 0;
 			}
-			if(!actual.getRamas().isEmpty()) {
-				numRamas.add(actual.getRamas().values().size());
-				for(Nodo e : actual.getRamas().values()) {
-					cola.add(e);
+//			 else {
+//				System.out.print(actual.getRaiz() + " ");
+//			}
+			if (!actual.getRamas().isEmpty()) {
+				numRamas.set(alturAct + 1, numRamas.get(alturAct + 1) + actual.getRamas().size());
+				for (Nodo e : actual.getRamas().values()) {
+					cola.add(new Pair2(e,alturAct+1));
 				}
 			}
 		}
 	}
-	
+
 }
