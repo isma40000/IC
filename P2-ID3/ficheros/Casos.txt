@@ -1,0 +1,6 @@
+soleado,caluroso,alta,falso
+soleado,caluroso,alta,verdad
+nublado,caluroso,alta,falso
+lluvioso,caluroso,normal,verdad
+lluvioso,caluroso,alta,falso
+lluevePoco,caluroso,normal,verdad

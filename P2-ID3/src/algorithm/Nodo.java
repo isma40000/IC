@@ -1,15 +1,14 @@
 package algorithm;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Nodo {
 
-	private String raiz="";
+	private String raiz = "";
 	private boolean hoja;
 	private HashMap<String, Nodo> ramas = new HashMap<String, Nodo>();
 	private Nodo padre;
-	private String ramaPadre;
+	private String ramaPadre = "";
 
 	public Nodo(String raiz, boolean hoja, HashMap<String, Nodo> ramas, Nodo padre, String ramaPadre) {
 		this.raiz = raiz;

@@ -26,7 +26,6 @@ public final class LecturaDatos {
 				listaAtributos.add(a);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 		}
 		return listaAtributos;
 	}
@@ -51,8 +50,6 @@ public final class LecturaDatos {
 				listaValores.clear();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
 		}
 		return listaEjemplos;
 	}

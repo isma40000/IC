@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 public class Datos {
 	private ArrayList<Ejemplo> ejemplos;
 	private ArrayList<String> atributos;
-	// HashMap<String, ArrayList<String>> valoresAtributos;
 	private HashMap<String, ArrayList<Pair>> valoresAtributos;// atributos y sus valores hasta el momento, incluyendo
 																// los APNRs
 	private String clase;
@@ -15,30 +14,12 @@ public class Datos {
 	private HashMap<String, ArrayList<String>> valoresRegistrados;// valores de atributos que ya han sido registrados,
 																	// para no calcular de nuevo APNRs
 
-//	public Datos(ArrayList<Ejemplo> ejemplos, ArrayList<String> atributos, String clasePos) {
-//		this.ejemplos = ejemplos;
-//		this.atributos = atributos;
-//		this.clase = atributos.get(atributos.size() - 1);
-//		this.atributos.remove(this.clase);
-//		this.clasePos = clasePos;
-//		for(Ejemplo e : ejemplos) {
-//			for(Entry<String, String> entry : e.getEjemplo().entrySet()) {
-//				if(valoresAtributos.containsKey(entry.getKey())) {
-//					valoresAtributos.get(entry.getKey()).add(entry.getValue());
-//				}else {
-//					valoresAtributos.put(entry.getKey(), new ArrayList<String>());
-//					valoresAtributos.get(entry.getKey()).add(entry.getValue());
-//				}
-//			}
-//		}
-//	}
-
-	public Datos(ArrayList<Ejemplo> ejemplos, ArrayList<String> atributos, String clasePos) {
+	public Datos(ArrayList<Ejemplo> ejemplos, ArrayList<String> atributos, String clasePos, String nombreClase) {
 		valoresAtributos = new HashMap<String, ArrayList<Pair>>();
-		valoresRegistrados = new HashMap<String, ArrayList<String>>(); 
+		valoresRegistrados = new HashMap<String, ArrayList<String>>();
 		this.ejemplos = ejemplos;
 		this.atributos = atributos;
-		this.clase = atributos.get(atributos.size() - 1);
+		this.clase = nombreClase;
 		this.atributos.remove(this.clase);
 		this.clasePos = clasePos;
 		for (Ejemplo e : ejemplos) {
@@ -129,13 +110,13 @@ public class Datos {
 	public ArrayList<Ejemplo> getEjemplosRestantes(String atributo, String valor) {
 		ArrayList<Ejemplo> restantes = new ArrayList<Ejemplo>();
 		for (Ejemplo e : ejemplos) {
-			if (e.getValorAtributo(atributo) == valor) {
+			if (e.getValorAtributo(atributo).equals(valor)) {
 				restantes.add(e);
 			}
 		}
 		return restantes;
 	}
-	
+
 	public ArrayList<String> getAtributosRestantes(String atributo) {
 		ArrayList<String> restantes = new ArrayList<String>(atributos);
 		restantes.remove(atributo);
@@ -163,8 +144,8 @@ public class Datos {
 	}
 
 	public APNRs getAPNRs(String atributo, String valor) {
-		int contP = 0;
-		int cont = 0;
+		double contP = 0;
+		double cont = 0;
 		for (Ejemplo e : this.ejemplos) {
 			if (e.getValorAtributo(atributo).equals(valor)) {
 				cont++;
@@ -173,7 +154,8 @@ public class Datos {
 				}
 			}
 		}
-		return new APNRs(cont, contP, cont - contP, contP / this.ejemplos.size());
+		double r = contP / this.ejemplos.size();
+		return new APNRs(cont, contP, cont - contP, r);
 	}
 
 	public double merito(String atributo) {
@@ -192,6 +174,8 @@ public class Datos {
 
 	public double log(double base, double number) {
 		// log_b(x) = ln(x) / ln(b)
+		if (number == 0)
+			return 1;
 		return Math.log(number) / Math.log(base);
 	}
 

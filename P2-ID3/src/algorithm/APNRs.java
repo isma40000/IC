@@ -1,69 +1,54 @@
 package algorithm;
 
-
 public class APNRs {
-	private int a;
-	private int p;
-	private int n;
+	private double a;
+	private double p;
+	private double n;
 	private double r;
+
 	public APNRs() {
 		this.a = 0;
 		this.p = 0;
 		this.n = 0;
 		this.r = 0;
 	}
-	public APNRs(int a, int p, int n, double r) {
+
+	public APNRs(double a, double p, double n, double r) {
 		this.a = a;
 		this.p = p;
 		this.n = n;
 		this.r = r;
 	}
 
-//	public APNRs(ArrayList<Ejemplo> ejemplos,String atributo,String valor,String clase,String valorResultado) {
-//		int contP = 0;
-//		int cont = 0;
-//		for (Ejemplo e : ejemplos) {
-//			if(e.getValorAtributo(atributo).equals(valor)) {
-//				cont++;
-//				if (e.getValorAtributo(clase).equals(valorResultado)) {
-//					contP++;
-//				}
-//			}
-//		}
-//		this.a=cont;
-//		this.p=contP;
-//		this.n=cont-contP;
-//	}
-
-	public int getTotal() {
+	public double getTotal() {
 		return a;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(double total) {
 		this.a = total;
 	}
 
-	public int getP() {
+	public double getP() {
 		return p;
 	}
 
-	public void setP(int p) {
+	public void setP(double p) {
 		this.p = p;
 	}
 
-	public int getN() {
+	public double getN() {
 		return n;
 	}
 
-	public void setN(int n) {
+	public void setN(double n) {
 		this.n = n;
 	}
 
-	public int getA() {
+	public double getA() {
 		return a;
 	}
 
-	public void setA(int a) {
+	public void setA(double a) {
 		this.a = a;
 	}
 
@@ -71,7 +56,7 @@ public class APNRs {
 		return r;
 	}
 
-	public void setR(int r) {
+	public void setR(double r) {
 		this.r = r;
 	}
 
