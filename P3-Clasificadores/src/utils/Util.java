@@ -43,6 +43,22 @@ public class Util {
 		}
 		return Matrix.constructWithCopy(aux);
 	}
+	
+	public static ArrayList<Matrix> centrostoMatrix(ArrayList<double[]> centros){
+		ArrayList<Matrix> sol =  new ArrayList<Matrix> ();
+		for(double[] c: centros) {
+			sol.add(getMatrix(c));
+		}
+		return sol;
+	}
+	
+	public static ArrayList<double[]> matrixtocentros(ArrayList<Matrix> centros){
+		ArrayList<double[]> sol =  new ArrayList<double[]> ();
+		for(Matrix c: centros) {
+			sol.add(c.getRowPackedCopy());
+		}
+		return sol;
+	}
 
 	public static ArrayList<Matrix> mediastoMatrix(ArrayList<double[]> medias) {
 		ArrayList<Matrix> sol = new ArrayList<Matrix>();
