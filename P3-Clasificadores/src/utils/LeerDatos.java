@@ -10,34 +10,31 @@ public final class LeerDatos {
 
 	private static ArrayList<double[]> datos;
 	private static ArrayList<String> clasesDeDatos;
-	
+
 	public static ArrayList<double[]> readDatos(String nomFile) {
 		if (nomFile == null || nomFile.equals("")) {
 			throw new NullPointerException();
 		}
 		File file = new File(nomFile);
-		datos = new ArrayList<double[]> ();
+		datos = new ArrayList<double[]>();
 		clasesDeDatos = new ArrayList<String>();
-		
+
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] linea = line.split(",");
 				double[] ejemplo = new double[linea.length - 1];
 				for (int i = 0; i < linea.length; i++) {
-					if(i == linea.length-1) {
+					if (i == linea.length - 1) {
 						clasesDeDatos.add(linea[i]);
-					}
-					else {
+					} else {
 						ejemplo[i] = Double.valueOf(linea[i]);
 					}
 				}
 				datos.add(ejemplo);
 			}
-		} catch (IOException e ) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			
+		} catch (IOException e) {
+
 		}
 		return datos;
 	}
@@ -57,5 +54,5 @@ public final class LeerDatos {
 	public static void setClasesDeDatos(ArrayList<String> clasesDeDatos) {
 		LeerDatos.clasesDeDatos = clasesDeDatos;
 	}
-	
+
 }

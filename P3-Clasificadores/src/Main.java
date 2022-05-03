@@ -20,7 +20,6 @@ public class Main {
 	private static ArrayList<String> clasesDatos;
 	private static ArrayList<String> clasest;
 	private static ArrayList<double[]> mediasIni;
-	private static String algoritmo;
 	private static Kmeans kmeans;
 	private static Lloyd lloyd;
 	private static Bayes bayes;
@@ -64,28 +63,7 @@ public class Main {
 				inicializaAlgoritmos();
 			}
 
-//			// Ejercicio 1, Hoja 2
-//			ArrayList<double[]> puntos = new ArrayList<double[]>();
-//			puntos.add(new double[] { 3, 1 });
-//			puntos.add(new double[] { 2, 2 });
-//			puntos.add(new double[] { 1, 0 });
-//			puntos.add(new double[] { 6, 7 });
-//			puntos.add(new double[] { 7, 5 });
-//			puntos.add(new double[] { 8, 6 });
-//
-//			ArrayList<String> clases = new ArrayList<String>();// clase de cada punto
-//			clases.add("Clase 1");
-//			clases.add("Clase 1");
-//			clases.add("Clase 1");
-//			clases.add("Clase 2");
-//			clases.add("Clase 2");
-//			clases.add("Clase 2");
-//
-//			ArrayList<double[]> centros = new ArrayList<double[]>();
-//			centros.add(new double[] { 2, 1 });
-//			centros.add(new double[] { 7, 6 });
-
-			bayes = new Bayes(datos, clasesDatos);
+			// Bayes
 			bayes.execute();
 
 			System.out.println("Algoritmo de Bayes");
@@ -99,6 +77,7 @@ public class Main {
 				System.out.println(Util.matrixtoString(mCov.get(c)));
 			}
 			System.out.println("-------------------------------------");
+
 			jf.setCurrentDirectory(workingDirectory);
 			jf.setDialogTitle("Elige un archivo con ejemplos para clasificar - Bayes");
 			jf.setVisible(true);
@@ -106,14 +85,14 @@ public class Main {
 			archivo = jf.getSelectedFile();
 			int i = 0;
 			for (double[] punto : LeerDatos.readDatos(archivo.getAbsolutePath())) {
-				System.out.println("Clasificado el punto " + i + " como: " + bayes.clasificarNuevo(punto));
-				System.out.println("Clase real del punto " + i + ": " + LeerDatos.getClasesDeDatos().get(i));
+				System.out.println("Bayes - Clasificado el punto " + i + " como: " + bayes.clasificarNuevo(punto));
+				System.out.println("Bayes - Clase real del punto " + i + ": " + LeerDatos.getClasesDeDatos().get(i));
 				i++;
 			}
-			// Ejercicio 2 Hoja 2
+			// Kmeans
 			kmeans.execute();
 			ArrayList<double[]> sol2 = kmeans.getCentros();
-			System.out.println("########################################## \n");
+			System.out.println("##########################################");
 			System.out.println("Algoritmo k_means");
 			System.out.println("..........................................");
 			System.out.println("Centros obtenidos:");
@@ -121,6 +100,7 @@ public class Main {
 			System.out.println("Matriz de grados de pertenencia U:");
 			System.out.println(Util.utoString(kmeans.getU()));
 			System.out.println("-------------------------------------");
+
 			jf.setCurrentDirectory(workingDirectory);
 			jf.setDialogTitle("Elige un archivo con ejemplos para clasificar - Kmeans");
 			jf.setVisible(true);
@@ -128,28 +108,29 @@ public class Main {
 			archivo = jf.getSelectedFile();
 			int i2 = 0;
 			for (double[] punto : LeerDatos.readDatos(archivo.getAbsolutePath())) {
-				double p1=0,p2;
-				int indice=0;
-				for(int beta=0;beta<clasest.size();beta++) {
-					p2=kmeans.calculaPertenencia(beta, Util.getMatrix(punto));
-					if(p2>p1) {
-						p1=p2;
-						indice=beta;
+				double p1 = 0, p2;
+				int indice = 0;
+				for (int beta = 0; beta < clasest.size(); beta++) {
+					p2 = kmeans.calculaPertenencia(beta, Util.getMatrix(punto));
+					if (p2 > p1) {
+						p1 = p2;
+						indice = beta;
 					}
 				}
-				System.out.println("Clasificado el punto " + i2 + " como: " + clasest.get(indice));
-				System.out.println("Clase real del punto " + i2 + ": " + LeerDatos.getClasesDeDatos().get(i2));
+				System.out.println("Kmeans - Clasificado el punto " + i2 + " como: " + clasest.get(indice));
+				System.out.println("Kmeans - Clase real del punto " + i2 + ": " + LeerDatos.getClasesDeDatos().get(i2));
 				i2++;
 			}
-			
-			// Ejercicio 3 Hoja 2
+
+			// LLoyd
 			lloyd.execute();
 			ArrayList<double[]> sol = lloyd.getCentros();
-			System.out.println("########################################## \n");
-			System.out.println("Algoritmo de Lloyd - Ejercicio 3, Hoja 2");
+			System.out.println("##########################################");
+			System.out.println("Algoritmo de Lloyd");
 			System.out.println("..........................................");
 			System.out.println("Centros obtenidos:");
 			System.out.println(Util.mediastoString(sol));
+
 			jf.setCurrentDirectory(workingDirectory);
 			jf.setDialogTitle("Elige un archivo con ejemplos para clasificar - Lloyd");
 			jf.setVisible(true);
@@ -157,24 +138,17 @@ public class Main {
 			archivo = jf.getSelectedFile();
 			int i3 = 0;
 			for (double[] punto : LeerDatos.readDatos(archivo.getAbsolutePath())) {
-				double p1=0,p2;
-				int indice=0;
-				for(int beta=0;beta<clasest.size();beta++) {
-					p2=lloyd.bestCenter(punto);
-					if(p2>p1) {
-						p1=p2;
-						indice=beta;
-					}
-				}
-				System.out.println("Clasificado el punto " + i3 + " como: " + clasest.get(indice));
-				System.out.println("Clase real del punto " + i3 + ": " + LeerDatos.getClasesDeDatos().get(i3));
+				int indice = 0;
+				indice = lloyd.bestCenter(punto);
+
+				System.out.println("Lloyd - Clasificado el punto " + i3 + " como: " + clasest.get(indice));
+				System.out.println("Lloyd - Clase real del punto " + i3 + ": " + LeerDatos.getClasesDeDatos().get(i3));
 				i3++;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Fichero con formato incorrecto");
-			// Controlador.getInstance().clean();
 		}
 	}
 }

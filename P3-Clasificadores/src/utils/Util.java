@@ -14,7 +14,7 @@ public class Util {
 		return instance;
 	}
 
-	public static Matrix getMatrix(double[] dif) { // matriz columna
+	public static Matrix getMatrix(double[] dif) {
 		double[][] mDif = new double[dif.length][1];
 		for (int i = 0; i < dif.length; i++) {
 			mDif[i][0] = dif[i];
@@ -43,18 +43,18 @@ public class Util {
 		}
 		return Matrix.constructWithCopy(aux);
 	}
-	
-	public static ArrayList<Matrix> centrostoMatrix(ArrayList<double[]> centros){
-		ArrayList<Matrix> sol =  new ArrayList<Matrix> ();
-		for(double[] c: centros) {
+
+	public static ArrayList<Matrix> centrostoMatrix(ArrayList<double[]> centros) {
+		ArrayList<Matrix> sol = new ArrayList<Matrix>();
+		for (double[] c : centros) {
 			sol.add(getMatrix(c));
 		}
 		return sol;
 	}
-	
-	public static ArrayList<double[]> matrixtocentros(ArrayList<Matrix> centros){
-		ArrayList<double[]> sol =  new ArrayList<double[]> ();
-		for(Matrix c: centros) {
+
+	public static ArrayList<double[]> matrixtocentros(ArrayList<Matrix> centros) {
+		ArrayList<double[]> sol = new ArrayList<double[]>();
+		for (Matrix c : centros) {
 			sol.add(c.getRowPackedCopy());
 		}
 		return sol;
@@ -163,7 +163,7 @@ public class Util {
 	public static String utoString(double[][] u) {
 		// TODO Auto-generated method stub
 		String s = "";
-		s += "---Matriz---------" + "\n";
+		s += "------Matriz------" + "\n";
 		for (int i = 0; i < u.length; i++) {
 			for (int j = 0; j < u[i].length; j++) {
 				s += redondearDecimales(u[i][j], 3);

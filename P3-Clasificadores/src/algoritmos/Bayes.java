@@ -7,7 +7,7 @@ import Jama.Matrix;
 import utils.Util;
 
 public class Bayes {
-	private HashMap<String, ArrayList<double[]>> puntos; // String es el nombre de cada clase
+	private HashMap<String, ArrayList<double[]>> puntos;
 	private HashMap<String, double[]> medias;
 	private HashMap<String, Matrix> mCovarianzas;
 
@@ -55,7 +55,7 @@ public class Bayes {
 			Matrix media = Util.getMatrix(this.medias.get(clase));
 			for (double[] puntoClase : this.puntos.get(clase)) {
 				Matrix mPunto = Util.getMatrix(puntoClase);
-				// formula covarianza xi - mi
+
 				mCov = mCov.plus((mPunto.minus(media)).times((mPunto.minus(media).transpose())));
 			}
 
@@ -92,7 +92,7 @@ public class Bayes {
 		int d = mPunto.getRowDimension();
 		Matrix cInversa = this.mCovarianzas.get(clase).inverse();
 		double distMahalanobisAlCuadrado = (((mPunto.minus(media)).transpose()).times(cInversa))
-				.times(mPunto.minus(media)).get(0, 0); // 1 x 1
+				.times(mPunto.minus(media)).get(0, 0);
 		double aux = distMahalanobisAlCuadrado * -0.5;
 		double f = Math.exp(aux);
 		double sol = f * 1.0 / (Math.pow(2 * Math.PI, d / 2) * Math.pow(this.mCovarianzas.get(clase).det(), 0.5));

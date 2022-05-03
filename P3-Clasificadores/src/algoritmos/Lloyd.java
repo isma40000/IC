@@ -19,7 +19,7 @@ public class Lloyd {
 		int numIter = 0;
 		do {
 			numIter++;
-			this.centrosAnt = this.centros; // ojito que no sea por referencia
+			this.centrosAnt = this.centros;
 			int actualiza = 0;
 			for (int i = 0; i < this.puntos.size(); i++) {
 				actualiza = bestCenter(this.puntos.get(i));
